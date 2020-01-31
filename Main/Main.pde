@@ -1,60 +1,38 @@
-import processing.video.*;
-// 428 seconds in deborah ball video, 7 minutes, 8 seconds
+// import processing.video.*;
 
-/*
-String infoMessage = "
- This vis revists a classic example of work by D. Ball that ….
- It dapts an IG approach to focus on one teachers movement and classroom conversation while also allowing for video etc.
- 
- On the left is floor plan of classroom
- On right is a timeline in minutes and seconds
- Teachers movement shown over space and space time
- Read space time
- Press c Conversation—each line of talk is conversation turn-length of line is # of words
- Hover over conversation to read/highlight in space time and plan view
- Press v for video to be able to play video in space and time
- Press a for animation
- I to return to this message
- "
- */
-
-ArrayList<Point> movement = new ArrayList(), conversation = new ArrayList(); // holders for movement and conversation points/class
-class Point {
-  float xPos;
-  float yPos;
-  float time;
-  String conversation;
-}
-PImage floorPlan; // base map/floor plan
-int PLAN = 0, SPACETIME = 1; // constants for 2 views
+// DATA 
+ArrayList<Path> paths = new ArrayList(); // holder for each person
+IntList rowCounts = new IntList(); // list to sort max/min number of movement points in each path
+int animationMaxValue;
+PImage floorPlan; // floor plan
+int PLAN = 0, SPACETIME = 1; // constants to indicate plan or space-time views
 float timelineStart, timelineEnd, timelineHeight;
-PFont font;
-int bugPrecision = 5, bugSize = 25;
-float bugXPos = -1, bugYPos = -1, bugTimePos = -1;
+float bugTimePosForVideo; // to draw slicer line when video is playing
 
-// Video Variables
-Movie ballVideo;
-Video video = new Video();
-boolean videoMode = false; // boolean indicating whether video is active
-boolean videoIsPlaying = false; // boolean indicating if video is playing/stopped
-float videoCurrTime = 0; // video current time in seconds
-float videoDuration; // video duration set in loadData from video data
+//// Video Variables
+//Movie ballVideo;
+//Video video = new Video();
+//boolean videoMode = false; // indicates if video is active
+//boolean videoIsPlaying = false; // indicates if video is playing/stopped
+//float videoCurrTime = 0; // video current time in seconds
+//float videoDuration; // video duration set in loadData from video data
 
 // GUI Variables
-boolean showConversation = false;
-boolean animation = true;
-boolean introMsg = true;
-boolean conversationIsSelected = false; // true when a conversation is selected in GUI 
-int[] conversationToDraw = {0, 0}; // Holds values to draw selected Conversation in GUI
-int numberOfPoints = 0; // controls how many points are drawn and works with animation
-color [] colors = {#984ea3, #377eb8, #4daf4a, #ff7f00, #e41a1c, #ffff33, #a65628};
+PFont font;
+IntDict speakerColor = new IntDict(); // hash for speaker color
+color [] colorShades = {#984ea3, #377eb8, #4daf4a, #e41a1c, #ff7f00}; // Teacher, Sean, Mei, Cassandra, Nathan
+boolean showConversation = false, animation = true; // indicates conversation selected and program animating
+boolean allConversationView = false;
+int animationCounter = 0; // controls animation
+int conversationRectWidth = 9, minConversationRectLength = 5;
+float buttonSpacing, buttonWidth, speakerKeysHeight, additionalKeysHeight;
+int bugPrecision, bugSize;
 
 
 void setup() {
-  fullScreen(P2D);
-  // size(500, 500, P2D);
+  fullScreen(P3D);
   pixelDensity(displayDensity());
-  font = loadFont("Helvetica-24.vlw");
+  font = loadFont("BookAntiqua-48.vlw");
   textFont(font, 14);
   floorPlan = loadImage("floorPlan.png");
   setData();
@@ -64,14 +42,17 @@ void setup() {
 void draw() {
   updateAnimation();
   image(floorPlan, 0, 0, width, height);
-  if (videoMode) video.draw();
-  DrawData drawData = new DrawData();
-  drawData.setDrawData(movement, conversation);
+  // if (videoMode) video.draw();
+  Keys keys = new Keys();
+  keys.drawKeys();
+  //DrawData drawData = new DrawData();
+  //for (int i = 0; i < paths.size(); i++) {
+  //  Path path = paths.get(i);
+  //  if (path.show) drawData.setDrawData(path);
+  //}
 }
 
 void updateAnimation() {
-  if (!introMsg && numberOfPoints < movement.size() -1) {
-    numberOfPoints++;
-    animation = true;
-  } else animation = false;
+  if (animationCounter < animationMaxValue) animationCounter++;
+  else animation = false;
 }
