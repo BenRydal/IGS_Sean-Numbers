@@ -18,7 +18,7 @@ var bugTimePosForVideo; // to draw slicer line when video is playing
 //float videoDuration; // video duration set in loadData from video data
 
 // GUI Variables
-var font
+var font;
 var speakerColor = {}; // hash for speaker color
 var colorShades = ['#984ea3', '#377eb8', '#4daf4a', '#e41a1c', '#ff7f00']; // Teacher, Sean, Mei, Cassandra, Nathan
 var showConversation = false, animation = true; // indicates conversation selected and program animating
@@ -27,6 +27,10 @@ var animationCounter = 0; // controls animation
 var conversationRectWidth = 9, minConversationRectLength = 5;
 var buttonSpacing, buttonWidth, speakerKeysHeight, additionalKeysHeight;
 var bugPrecision, bugSize;
+
+function preload() {
+    preloadCSVs();
+}
 
 function setup() {
     //fullscreen(P3D);

@@ -2,7 +2,7 @@ function setData() {
   setGUIData();
   setSpeakerData();
   // setVideoData();
-  loadData();
+  processData();
   animationMaxValue = Math.min(...rowCounts); // set animationMaxVlaue to the smallest data file
 }
 
@@ -35,19 +35,27 @@ function setSpeakerData() {
 //  ballVideo.stop();
 //}
 
-function loadData() {
+var dataTables = [];
+var fileNames;
+
+// Loads CSV file into p5.Table objects so that they can manipulated later
+function preloadCSVs() {
   var filePath = "data/interaction/";
-  var fileNames = ['Cassandra.csv', 'Mei.csv', 'Nathan.csv', 'Sean.csv', 'Teacher.csv'];
+  fileNames = ['Cassandra.csv', 'Mei.csv', 'Nathan.csv', 'Sean.csv', 'Teacher.csv'];
   for (var i = 0; i < fileNames.length; i++) { // loop through all files in directory
     var fileName = fileNames[i];
-    if (fileName.endsWith(".csv")) { // If it is a CSV file load data
-      var dataTable = loadTable(filePath + fileName, "header");
-      loadDataTable(dataTable, fileName.charAt(0)); // Use first letter of file name to associate with speaker
-    }
+    var dataTable = loadTable(filePath + fileName, "header");
+    dataTables.push(dataTable);
   }
 }
 
-// Loads CSV file as Path object to paths ArrayList. Path object is a person/path with movement and conversation Point objects, speaker and boolean show
+function processData() {
+  for (var i = 0; i < dataTables.length; i++) { // loop through all files in directory
+    loadDataTable(dataTables[i], fileNames[i].charAt(0)); // Use first letter of file name to associate with speaker
+  }
+}
+
+// Loads each speaker p5.Table as Path object to paths ArrayList. Path object is a person/path with movement and conversation Point objects, speaker and boolean show
 function loadDataTable(data, speaker) {
   var movement = []; // holds location data for each path
   var conversation = []; // holds conversaton data and location data for conversation for each path
@@ -59,21 +67,21 @@ function loadDataTable(data, speaker) {
   for (var i = 0; i < rowCount; i++) {
     // if there is a conversation turn, add it to conversation ArrayList
     var turn = data.getString(i, "talk");
-    if (turn.length() > 0) {
+    if (turn.length > 0) {
       var convoToAdd = new Point_Conversation();
-      convoToAdd.xPos = data.getFloat(i, "x") * width/1440; // scale factors to fit screen correctly
-      convoToAdd.yPos = data.getFloat(i, "y") * height/900;
+      convoToAdd.xPos = data.getNum(i, "x") * width/1440; // scale factors to fit screen correctly
+      convoToAdd.yPos = data.getNum(i, "y") * height/900;
       convoToAdd.time = map(i, 0, rowCount, timelineStart, timelineEnd);
       convoToAdd.talkTurn = turn;
-      conversation.add(convoToAdd);
+      conversation.push(convoToAdd);
     }
     // Add to movement ArrayList depending on sampling rate
     if (i%samplingRate == 0) { // only get points from rows based on sampling rate (reduces data)
       var mvmntToAdd = new Point_Movement();
-      mvmntToAdd.xPos = data.getFloat(i, "x") * width/1440; // scale factors to fit screen correctly
-      mvmntToAdd.yPos = data.getFloat(i, "y") * height/900;
+      mvmntToAdd.xPos = data.getNum(i, "x") * width/1440; // scale factors to fit screen correctly
+      mvmntToAdd.yPos = data.getNum(i, "y") * height/900;
       mvmntToAdd.time = map(i, 0, rowCount, timelineStart, timelineEnd);
-      movement.add(mvmntToAdd); // always add to movement and only sometimes add to conversationPoints
+      movement.push(mvmntToAdd); // always add to movement and only sometimes add to conversationPoints
     }
   }
   var s = new Path(speaker);
