@@ -45,11 +45,11 @@ void draw() {
   // if (videoMode) video.draw();
   Keys keys = new Keys();
   keys.drawKeys();
-  //DrawData drawData = new DrawData();
-  //for (int i = 0; i < paths.size(); i++) {
-  //  Path path = paths.get(i);
-  //  if (path.show) drawData.setDrawData(path);
-  //}
+  DrawData drawData = new DrawData();
+  for (int i = 0; i < paths.size(); i++) {
+    Path path = paths.get(i);
+    if (path.show) drawData.setDrawData(path);
+  }
 }
 
 void updateAnimation() {
