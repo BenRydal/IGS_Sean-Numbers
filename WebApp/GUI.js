@@ -11,7 +11,7 @@ function getFullName(speaker) {
 // returns a color based on character
 function getPathColor(speaker) {
   var val = speakerColor[speaker]; // get number from name to set color
-  return colorShades[val];
+  return color(colorShades[val]);
 }
 
 // Tests if over circle with x, y and diameter

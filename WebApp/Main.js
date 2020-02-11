@@ -49,11 +49,11 @@ function draw() {
     // if (videoMode) video.draw();
     var keys = new Keys();
     keys.drawKeys();
-    //DrawData drawData = new DrawData();
-    //for (int i = 0; i < paths.size(); i++) {
-    //  Path path = paths.get(i);
-    //  if (path.show) drawData.setDrawData(path);
-    //}
+    var drawData = new DrawData();
+    for (var i = 0; i < paths.length; i++) {
+     var path = paths[i];
+     if (path.show) drawData.setDrawData(path);
+    }
 }
 
 function updateAnimation() {
