@@ -23,8 +23,7 @@ class DrawDataConversation extends DrawData {
 
   drawRects(points, speaker, numOfPaths) {
     var conversationAnimationRatio = float(animationCounter)/float(animationMaxValue); // for animation of conversation at same speed as movement
-    print(points.length * conversationAnimationRatio);
-    for (var i = 0; i < points.length; i++) { //    for (var i = 0; i < points.length * conversationAnimationRatio; i++) {
+    for (var i = 0; i < floor(points.length * conversationAnimationRatio); i++) { //    for (var i = 0; i < points.length * conversationAnimationRatio; i++) {
       var point = points[i];
       if (!allConversationView) if (point.talkTurn.charAt(0) != speaker) continue;
       else if (numOfPaths > 1 && point.talkTurn.charAt(0) != speaker) continue; // if drawing multiple paths only draw rects for current path
