@@ -1,15 +1,17 @@
-class DrawDataConversation extends DrawData {
+class DrawDataConversation {
 
   constructor() {
-    super();
     this.conversationIsSelected = false;
-    this.conversationTurnToDraw = 0;
-    this.drawInPlanOrSpaceTime = 0;
+    this.conversationToDraw = 0;
+    this.drawInPlanOrSpaceTime = 0
   }
 
   setData(path) {
     if (showConversation && path.conversation.length > 0) this.setRects(path.conversation, path.speaker); // if drawing conversation and path has conversation
-    if (this.conversationIsSelected) this.drawText(path.conversation); // draw last
+  }
+
+  setConversationBubble() {
+    if (this.conversationIsSelected) this.drawText(); // done last to be overlaid on top
   }
 
   setRects(points, speaker) {
@@ -31,10 +33,10 @@ class DrawDataConversation extends DrawData {
       textSize(.5); // controls length/size of rect drawn
       var conversationLength = textWidth(point.talkTurn);
       if (conversationLength < minConversationRectLength) conversationLength = minConversationRectLength; // set small strings to minimum
-      if (overRect(point.xPos, point.yPos - conversationLength, conversationRectWidth, conversationLength)) this.setText(i, PLAN); // if over plan
-      else  if (overRect(point.time, point.yPos - conversationLength, conversationRectWidth, conversationLength)) this.setText(i, SPACETIME); // if over spacetime
+      if (overRect(point.xPos, point.yPos - conversationLength, conversationRectWidth, conversationLength)) this.setText(points[i], PLAN); // if over plan
+      else  if (overRect(point.time, point.yPos - conversationLength, conversationRectWidth, conversationLength)) this.setText(points[i], SPACETIME); // if over spacetime
       fill(getPathColor(point.talkTurn.charAt(0)));
-      // setDrawText also sets stroke/strokeWeight to highlight rect if selected
+      // setText sets stroke/strokeWeight to highlight rect if selected
       rect(point.xPos, point.yPos - conversationLength, conversationRectWidth, conversationLength); // Plan
       rect(point.time, point.yPos - conversationLength, conversationRectWidth, conversationLength); // Spacetime
     }
@@ -42,13 +44,13 @@ class DrawDataConversation extends DrawData {
 
   setText(num, view) {
     this.conversationIsSelected = true;
-    this.conversationTurnToDraw = num;
+    this.conversationToDraw = num;
     this.drawInPlanOrSpaceTime = view;
     stroke(0);
     strokeWeight(4); // controls selection of rect for this conversation on return
   }
 
-  drawText(points) {
+  drawText() {
     // text scaling/positioning variables
     textSize(14);
     var boxSpacing = 10; // general spacing variable for drawing text box
@@ -56,7 +58,7 @@ class DrawDataConversation extends DrawData {
     var boxWidth = 300;
     var leading = 20; // thickness/width of each talk turn
     textLeading(leading);
-    var point = points[this.conversationTurnToDraw];
+    var point = this.conversationToDraw;
     var textBoxWidth = boxWidth; // width of text and textbox drawn
     var textBoxHeight = leading * (ceil(textWidth(point.talkTurn)/textBoxWidth)); // lines of talk in a text box rounded up
     // xPos coordinate

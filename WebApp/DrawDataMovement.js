@@ -1,7 +1,6 @@
-class DrawDataMovement extends DrawData {
+class DrawDataMovement {
 
   constructor() {
-    super();
     this.bugXPos = -1;
     this.bugYPos = -1;
     this.bugTimePos = -1;

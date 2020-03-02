@@ -54,6 +54,8 @@ function draw() {
      var path = paths[i];
      if (path.show) drawData.setDrawData(path);
     }
+    drawData.setConversationBubble();
+
 }
 
 function updateAnimation() {
