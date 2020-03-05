@@ -2,33 +2,33 @@ class DrawDataConversation {
 
   constructor() {
     this.conversationIsSelected = false;
-    this.conversationToDraw = 0;
+    this.conversationToDraw = 0; //stores the Point_Conversation object
     this.drawInPlanOrSpaceTime = 0
   }
 
   setData(path) {
-    if (showConversation && path.conversation.length > 0) this.setRects(path.conversation, path.speaker); // if drawing conversation and path has conversation
+    if (showConversation && path.conversation.length > 0) this.drawRects(path.conversation, path.speaker); // if drawing conversation and path has conversation
   }
 
   setConversationBubble() {
     if (this.conversationIsSelected) this.drawText(); // done last to be overlaid on top
   }
 
-  setRects(points, speaker) {
+  numOfPaths() {
     var numOfPaths = 0; // determine how many paths are being drawn
     for (var i = 0; i < paths.length; i++) {
       var path = paths[i];
       if (path.show == true) numOfPaths++;
     }
-    this.drawRects(points, speaker, numOfPaths);
+    return numOfPaths;
   }
 
-  drawRects(points, speaker, numOfPaths) {
+  drawRects(points, speaker) {
     var conversationAnimationRatio = float(animationCounter)/float(animationMaxValue); // for animation of conversation at same speed as movement
     for (var i = 0; i < floor(points.length * conversationAnimationRatio); i++) { //    for (var i = 0; i < points.length * conversationAnimationRatio; i++) {
       var point = points[i];
       if (!allConversationView) if (point.talkTurn.charAt(0) != speaker) continue;
-      else if (numOfPaths > 1 && point.talkTurn.charAt(0) != speaker) continue; // if drawing multiple paths only draw rects for current path
+      else if (this.numOfPaths() > 1 && point.talkTurn.charAt(0) != speaker) continue; // if drawing multiple paths only draw rects for current path
       noStroke(); // reset if setDrawText is called previously in loop
       textSize(.5); // controls length/size of rect drawn
       var conversationLength = textWidth(point.talkTurn);
@@ -79,7 +79,7 @@ class DrawDataConversation {
     // textbox
     stroke(0); //set color to black
     strokeWeight(1);
-    fill(255, 200); // transparancy for textbox
+    fill(255, 200); // transparency for textbox
     rect(xPos - boxSpacing, yPos - boxSpacing, textBoxWidth + boxSpacing, textBoxHeight + boxSpacing); // box around text
     fill(0);
     text(point.talkTurn, xPos, yPos, textBoxWidth, textBoxHeight); //conversation text
