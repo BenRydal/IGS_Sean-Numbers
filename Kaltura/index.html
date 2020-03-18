@@ -1,21 +1,17 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
-    <script src="Main.js"></script>
-    <script src="DataClasses.js"></script>
-    <script src="GUI.js"></script>
-    <script src="LoadData.js"></script>
-    <script src="Keys.js"></script>
-    <script src="DrawData.js"></script>
-    <script src="DrawDataMovement.js"></script>
-    <script src="DrawDataConversation.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script> -->
     <script type="text/javascript" src="http://player.kaltura.com/mwEmbedLoader.php"></script>
+    <script type="text/javascript" src="youtubeScript.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
+
   <body>
+    <div>
 
-    <div id="kalturaPlayer" style="width:400px;height:330px;">
-
-    </div>
+      <!--KALTURA PLAYER-->
+      <div id="kalturaPlayer" style="width:400px;height:330px;"></div>
 
       <script src="http://cdnapi.kaltura.com/p/1038472/sp/103847200/embedIframeJs/uiconf_id/33084471/partner_id/1038472"></script>
       <script>
@@ -33,5 +29,16 @@
         });
 
       </script>
+
+
+
+      <!--TEST BUTTONS-->
+      <div id="sampleActions">
+        <button class="btn">doPlay</button>
+        <button class="btn">doPause</button>
+        <button class="btn">doStop</button>
+      </div>
+
+    </div>
   </body>
 </html>

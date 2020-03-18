@@ -35,6 +35,12 @@ function preload() {
 function setup() {
     //fullscreen(P3D);
     canvas = createCanvas(window.innerWidth, window.innerHeight);
+    //canvas.child('kalturaPlayer');
+    select('#kalturaPlayer').position(100, 100);
+
+    // var kdp = document.getElementById('kalturaPlayer');
+    // kdp.sendNotification( "doPlay");
+
     pixelDensity(displayDensity());
     font = loadFont('data/Rufina-Regular.ttf');
     textFont(font, 14);
@@ -42,6 +48,8 @@ function setup() {
     setData();
     frameRate(30);
 }
+
+var showVideo  = true;
 
 function draw() {
     updateAnimation();
@@ -56,6 +64,11 @@ function draw() {
     }
     drawData.setConversationBubble();
 
+    if (showVideo) {
+            var kdp = document.getElementById('kalturaPlayer');
+    kdp.sendNotification( "doPlay");
+    showVideo = false;
+    }
 }
 
 function updateAnimation() {
