@@ -38,8 +38,8 @@ class Keys {
     noStroke();
     text(" (2)", currXPos, additionalKeysHeight);
     currXPos += textWidth(" (2)") + buttonSpacing;
-    //fill(videoMode ? 0: 150);
-    //text("Video", currXPos, additionalKeysHeight);
-    //textAlign(LEFT, TOP);
+    fill(videoMode ? 0: 150);
+    text("Video", currXPos, additionalKeysHeight);
+    textAlign(LEFT, TOP);
   }
 }

@@ -13,7 +13,7 @@
   </head>
   <body>
 
-    <div id="kalturaPlayer" style="width:400px;height:330px;">
+    <div id="kalturaPlayer" style="display:none">
 
     </div>
 
@@ -25,6 +25,9 @@
           'uiconf_id' : '33084471',
           'entry_id' : '1_9tp4soob',
           'flashvars':{ // flashvars allows you to set runtime uiVar configuration overrides.
+            'controlBarContainer.plugin': false,
+            //'largePlayBtn.plugin': false,
+            //'loadingSpinner.plugin': false,
             'autoPlay': false
           },
           'params':{ // params allows you to set flash embed params such as wmode, allowFullScreen etc
