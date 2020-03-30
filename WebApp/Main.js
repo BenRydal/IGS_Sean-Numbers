@@ -14,6 +14,7 @@ var bugTimePosForVideo; // to draw slicer line when video is playing
 //Video video = new Video();
 var videoMode = false; // indicates if video is active
 var videoIsPlaying = false; // indicates if video is playing/stopped
+var player;
 //float videoCurrTime = 0; // video current time in seconds
 //float videoDuration; // video duration set in loadData from video data
 
@@ -60,4 +61,16 @@ function draw() {
 function updateAnimation() {
     if (animationCounter < animationMaxValue) animationCounter++;
     else animation = false;
+}
+
+// need to set up the player variable. doesn't need to be in
+// this event handler, can be in preload or setup instead
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtubePlayer', {
+        videoId: 'Iu0rxb-xkMk',
+        playerVars: {
+            controls: 0,
+            disablekb: 1,
+        }
+    });
 }

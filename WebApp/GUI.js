@@ -38,15 +38,29 @@ function overAdditionalKeys() {
   else if (overRect(currXPos + textWidth("AnimateConversation") + buttonSpacing, additionalKeysHeight, textWidth(" (2)"), buttonWidth)) allConversationView = !allConversationView;
 
   else if (overRect(currXPos + textWidth("AnimateConversation (2)") + 2*buttonSpacing, additionalKeysHeight, textWidth("Video"), buttonWidth)) {
-   videoMode = !videoMode;
+    videoMode = !videoMode;
    // if (videoIsPlaying) {
    //   videoCurrTime = 0; // reset time to 0
    //   video.playPauseMovie(ballVideo);
    // }
-    var video = select('#kalturaPlayer').position(timelineStart, height*0.1);
+    /*******************
+    KALTURA PLAYER CODE
+    ********************/
+    // var video = select('#kalturaPlayer').position(timelineStart, height*0.1);
+    // if (!videoMode) {
+    //   var kdp = document.getElementById('kalturaPlayer');
+    //   kdp.sendNotification( 'doPause' );
+    // }
+    // video.style('display',(videoMode ? 'block' : 'none'));
+    // video.style('width', width*0.99 - timelineStart + '');
+    // video.style('height', timelineHeight - height*0.13 + '');
+
+    /*******************
+    YOUTUBE PLAYER CODE
+    ********************/
+    var video = select('#youtubePlayer').position(timelineStart, height*0.1);
     if (!videoMode) {
-      var kdp = document.getElementById('kalturaPlayer');
-      kdp.sendNotification( 'doPause' );
+      player.pauseVideo();
     }
     video.style('display',(videoMode ? 'block' : 'none'));
     video.style('width', width*0.99 - timelineStart + '');
