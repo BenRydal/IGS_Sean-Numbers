@@ -1,3 +1,6 @@
+// object that can make changes to the state of the video (play, pause, etc.)
+var player;
+
 // Increments animation counter if below max value or sets animation to false/off
 function updateAnimation() {
     if (animationCounter < animationMaxValue) animationCounter++;
@@ -6,9 +9,16 @@ function updateAnimation() {
 
 // Updates time selected in video for animation or when mouse is clicked
 function updateVideoScrubbing() {
-    var kdp = document.getElementById('moviePlayer');
-    if (animation) kdp.sendNotification('doSeek', map(bugTimePosForVideo, timelineStart, timelineEnd, 0, videoDuration));
-    else if (!videoIsPlaying && overRect(timelineStart, 0, timelineEnd, timelineHeight)) kdp.sendNotification('doSeek', map(mouseX, timelineStart, timelineEnd, 0, videoDuration));
+    switch(videoPlatform) {
+        case "Kaltura":
+            if (animation) player.sendNotification('doSeek', map(bugTimePosForVideo, timelineStart, timelineEnd, 0, videoDuration));
+            else if (!videoIsPlaying && overRect(timelineStart, 0, timelineEnd, timelineHeight)) player.sendNotification('doSeek', map(mouseX, timelineStart, timelineEnd, 0, videoDuration));
+            break;
+        case "Youtube":
+            if (animation) player.seekTo(map(bugTimePosForVideo, timelineStart, timelineEnd, 0, videoDuration), true);
+            else if (!videoIsPlaying && overRect(timelineStart, 0, timelineEnd, timelineHeight)) player.seekTo(map(mouseX, timelineStart, timelineEnd, 0, videoDuration), true);
+            break;
+    }
 }
 
 // Transition increase size for video
@@ -39,46 +49,86 @@ function decreaseVideoSize() {
 
 // Plays/pauses video and sets boolean videoIsPlaying
 function playPauseMovie() {
-    if (videoIsPlaying) {
-        var kdp = document.getElementById('moviePlayer');
-        kdp.sendNotification('doPause');
-        videoIsPlaying = false;
-    } else {
-        var kdp = document.getElementById('moviePlayer');
-        kdp.sendNotification('doSeek', videoCurrTime);
-        kdp.sendNotification('doPlay');
-        videoIsPlaying = true;
+    switch(videoPlatform) {
+        case "Kaltura":
+            if (videoIsPlaying) {
+                player.sendNotification('doPause');
+                videoIsPlaying = false;
+            } else {
+                player.sendNotification('doSeek', videoCurrTime);
+                player.sendNotification('doPlay');
+                videoIsPlaying = true;
+            }
+            break;
+        case "Youtube":
+            if (videoIsPlaying) {
+                player.pauseVideo();
+                videoIsPlaying = false;
+            } else {
+                player.seekTo(videoCurrTime, true);
+                player.playVideo();
+                videoIsPlaying = true;
+            }
+            break;
     }
 }
 
 // Pauses video, assumes boolean videoIsPlaying is set
 function pauseMovie() {
-    var kdp = document.getElementById('moviePlayer');
-    kdp.sendNotification('doPause');
+    switch(videoPlatform) {
+        case "Kaltura":
+            player.sendNotification('doPause');
+            break;
+        case "Youtube":
+            player.pauseVideo();
+            break;
+    }
     videoIsPlaying = false;
 }
 
 // Returns the current time of the video
 function getMovieCurrentTime() {
-    var kdp = document.getElementById('moviePlayer');
-    return kdp.evaluate('{video.player.currentTime}');
+    var currentTime = 0;
+    switch(videoPlatform) {
+        case "Kaltura":
+            currentTime = player.evaluate('{video.player.currentTime}');
+            break;
+        case "Youtube":
+            currentTime = player.getCurrentTime();
+            break;
+    }
+    return currentTime;
 }
 
-// Initialization for the Kaltura video player
+// Initialization for the video player
 function setupMovie() {
-    kWidget.embed({
-        'targetId': 'moviePlayer',
-        'wid': '_1038472',
-        'uiconf_id': '33084471',
-        'entry_id': '1_9tp4soob',
-        'flashvars': { // flashvars allows you to set runtime uiVar configuration overrides.
-            'controlBarContainer.plugin': false,
-            'disableOnScreenClick': true,
-            'largePlayBtn.plugin': false,
-            'autoPlay': false
-        },
-        'params': { // params allows you to set flash embed params such as wmode, allowFullScreen etc
-            'wmode': 'transparent'
-        }
-    });
+    switch(videoPlatform) {
+        case "Kaltura":
+            kWidget.embed({
+                'targetId': 'moviePlayer',
+                'wid': '_1038472',
+                'uiconf_id': '33084471',
+                'entry_id': '1_9tp4soob',
+                'flashvars': { // flashvars allows you to set runtime uiVar configuration overrides.
+                    'controlBarContainer.plugin': false,
+                    'disableOnScreenClick': true,
+                    'largePlayBtn.plugin': false,
+                    'autoPlay': false
+                },
+                'params': { // params allows you to set flash embed params such as wmode, allowFullScreen etc
+                    'wmode': 'transparent'
+                }
+            });
+            player = document.getElementById('moviePlayer');
+            break;
+        case "Youtube":
+            player = new YT.Player('moviePlayer', {
+                videoId: 'Iu0rxb-xkMk',
+                playerVars: {
+                    controls: 0,
+                    disablekb: 1,
+                }
+            });
+            break;
+    }
 }
