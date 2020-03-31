@@ -32,16 +32,14 @@ function overButtons() {
         conversationView_1 = false;
     } else if (overRect(currXPos + textWidth(button_1 + button_2 + button_3) + 6 * buttonSpacing, buttonsHeight, textWidth(button_4) + buttonSpacing, buttonWidth)) {
         videoMode = !videoMode;
-        var video = select('#kalturaPlayer');
+        var video = select('#moviePlayer');
         video.style('display', (videoMode ? 'block' : 'none'));
         if (videoMode) {
             video.style('width', videoWidthOnPause + ''); // reset width/height
             video.style('height', videoHeightOnPause + '');
         } else {
             videoCurrTime = 0; // reset time to 0
-            videoIsPlaying = false;
-            var kdp = document.getElementById('kalturaPlayer');
-            kdp.sendNotification('doPause');
+            pauseMovie();
         }
     } else if (overRect(currXPos + textWidth(button_1 + button_2 + button_3 + button_4) + 8 * buttonSpacing, buttonsHeight, textWidth(button_5) + buttonSpacing, buttonWidth)) overHowToReadButton();
 
@@ -62,7 +60,7 @@ function overButtonsMSGS() {
 
 // Draw text for button message/information
 function drawKeyMSG(msg) {
-    var textBoxHeight = textSpacing * (ceil(textWidth(msg) / textBoxWidth)); // lines of talk in a text box rounded 
+    var textBoxHeight = textSpacing * (ceil(textWidth(msg) / textBoxWidth)); // lines of talk in a text box rounded
     var textBoxStart = buttonsHeight - (textBoxHeight + 2 * boxSpacing);
     stroke(0); //set color to black
     strokeWeight(1);
@@ -77,7 +75,7 @@ function drawKeyMSG(msg) {
 }
 
 function drawHowToReadMSG() {
-    var textBoxHeight = textSpacing * (ceil(textWidth(howToReadMSG) / textBoxWidth)); // lines of talk in a text box rounded 
+    var textBoxHeight = textSpacing * (ceil(textWidth(howToReadMSG) / textBoxWidth)); // lines of talk in a text box rounded
     var textBoxStart = height / 5;
     var xPos = width / 2.1;
     stroke(0); //set color to black
@@ -95,6 +93,7 @@ function overHowToReadButton() {
         for (var i = 0; i < paths.length; i++) {
             var path = paths[i];
             if (path.speaker != 'T') path.show = false;
+            else path.show = true; // ensure teacher path is showed
         }
 
         conversationView_1 = false; // hide conversation if showing

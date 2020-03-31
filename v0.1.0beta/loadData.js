@@ -41,9 +41,9 @@ function setConversationValues() {
 }
 
 function setVideoValues() {
-    var video = select('#kalturaPlayer').position(timelineStart, 0); // position video in upper left corner on timeline
+    var video = select('#moviePlayer').position(timelineStart, 0); // position video in upper left corner on timeline
     videoWidthOnPause = width / 5;
-    videoHeightOnPause = width / 5;
+    videoHeightOnPause = width / 6;
     videoWidthOnPlay = width - timelineStart;
     videoHeightOnPlay = height * .78;
     videoWidthPlayCounter = videoWidthOnPause;

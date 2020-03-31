@@ -25,8 +25,7 @@ class DrawDataMovement {
             else if (view == SPACETIME) { // text/get bug values
                 curveVertex(point.time, point.yPos);
                 if (videoIsPlaying) {
-                    var kdp = document.getElementById('kalturaPlayer');
-                    var videoTime = kdp.evaluate('{video.player.currentTime}');
+                    var videoTime = getMovieCurrentTime();
                     var videoX = map(videoTime, 0, videoDuration, timelineStart, timelineEnd);
                     if (videoX >= point.time - bugPrecision && videoX <= point.time + bugPrecision) {
                         this.recordBug(point.xPos, point.yPos, point.time);
