@@ -1,11 +1,18 @@
 class DrawData {
 
+  constructor() {
+    this.drawConversation = new DrawDataConversation();
+    this.drawMovement = new DrawDataMovement();
+  }
+
   setDrawData(path) {
     var shade = getPathColor(path.speaker); // get color for path
-    var drawMovement = new DrawDataMovement();
-    drawMovement.setData(path, shade);
-    var drawConversation = new DrawDataConversation();
-    drawConversation.setData(path);
+    this.drawMovement.setData(path, shade);
+    this.drawConversation.setData(path);
+  }
+
+  setConversationBubble() {
+    this.drawConversation.setConversationBubble();
   }
 
 }
