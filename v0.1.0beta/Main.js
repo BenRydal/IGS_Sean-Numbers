@@ -64,15 +64,15 @@ var infoMsg = "Revisiting the case of 'Sean Numbers' by Ben Rydal Shapiro & Chri
 function preload() {
     fileNames = ['Cassandra.csv', 'Mei.csv', 'Nathan.csv', 'Sean.csv', 'Teacher.csv'];
     for (var i = 0; i < fileNames.length; i++) { // loop through all files in directory
-        var fileName = fileNames[i];
+        var fileName = 'data/interaction/' + fileNames[i];
         var dataTable = loadTable(fileName, "header");
         dataTables.push(dataTable);
     }
-    font_PlayfairReg = loadFont("PlayfairDisplay-Regular.ttf");
-    font_PlayfairItalic = loadFont("PlayfairDisplay-Italic.ttf");
-    font_Playfairbold = loadFont("PlayfairDisplay-Bold.ttf");
-    font_Lato = loadFont("Lato-Light.ttf");
-    floorPlan = loadImage("floorplan.png");
+    font_PlayfairReg = loadFont("data/PlayfairDisplay-Regular.ttf");
+    font_PlayfairItalic = loadFont("data/PlayfairDisplay-Italic.ttf");
+    font_Playfairbold = loadFont("data/PlayfairDisplay-Bold.ttf");
+    font_Lato = loadFont("data/Lato-Light.ttf");
+    floorPlan = loadImage("data/floorplan.png");
     // Create div to hold video player
     var movie = createDiv();
     movie.id('moviePlayer');
