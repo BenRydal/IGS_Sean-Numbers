@@ -64,7 +64,7 @@ function drawKeyMSG(msg) {
     var textBoxStart = buttonsHeight - (textBoxHeight + 2 * boxSpacing);
     stroke(0); //set color to black
     strokeWeight(1);
-    fill(255, 200); // transparency for textbox
+    fill(255, 225); // transparency for textbox
     var xPos = 0;
     if (width - mouseX < textBoxWidth / 2) xPos = width - textBoxWidth / 2 - 2 * boxSpacing;
     else xPos = mouseX;
@@ -75,16 +75,17 @@ function drawKeyMSG(msg) {
 }
 
 function drawHowToReadMSG() {
-    var textBoxHeight = textSpacing * (ceil(textWidth(howToReadMSG) / textBoxWidth)); // lines of talk in a text box rounded
+    var textBoxHeight = textSpacing * (ceil(textWidth(howToReadMSG_1) / textBoxWidth)); // lines of talk in a text box rounded
     var textBoxStart = height / 5;
     var xPos = width / 2.1;
     stroke(0); //set color to black
     strokeWeight(1);
-    fill(255, 200); // transparency for textbox
+    fill(255, 225); // transparency for textbox
     rect(xPos - boxSpacing, textBoxStart, textBoxWidth + 2 * boxSpacing, textBoxHeight + 2 * boxSpacing);
     fill(0);
     noStroke();
-    text(howToReadMSG, xPos, textBoxStart + boxSpacing, textBoxWidth, textBoxWidth);
+    text(howToReadMSG_1, xPos, textBoxStart + boxSpacing, textBoxWidth, textBoxWidth); // draw message in space-tiem view
+    drawKeyMSG(howToReadMSG_2); // draw message above how to read button
 }
 
 
@@ -95,7 +96,6 @@ function overHowToReadButton() {
             if (path.speaker != 'T') path.show = false;
             else path.show = true; // ensure teacher path is showed
         }
-
         conversationView_1 = false; // hide conversation if showing
         conversationView_2 = false;
     }
