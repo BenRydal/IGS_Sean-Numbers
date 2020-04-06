@@ -1,6 +1,3 @@
-// object that can make changes to the state of the video (play, pause, etc.)
-var player;
-
 // Increments animation counter if below max value or sets animation to false/off
 function updateAnimation() {
     if (animationCounter < animationMaxValue) animationCounter++;
@@ -9,16 +6,8 @@ function updateAnimation() {
 
 // Updates time selected in video for animation or when mouse is clicked
 function updateVideoScrubbing() {
-    switch(videoPlatform) {
-        case "Kaltura":
-            if (animation) player.sendNotification('doSeek', map(bugTimePosForVideo, timelineStart, timelineEnd, 0, videoDuration));
-            else if (!videoIsPlaying && overRect(timelineStart, 0, timelineEnd, timelineHeight)) player.sendNotification('doSeek', map(mouseX, timelineStart, timelineEnd, 0, videoDuration));
-            break;
-        case "Youtube":
-            if (animation) player.seekTo(map(bugTimePosForVideo, timelineStart, timelineEnd, 0, videoDuration), true);
-            else if (!videoIsPlaying && overRect(timelineStart, 0, timelineEnd, timelineHeight)) player.seekTo(map(mouseX, timelineStart, timelineEnd, 0, videoDuration), true);
-            break;
-    }
+    if (animation) videoPlayer.seekTo(map(bugTimePosForVideo, timelineStart, timelineEnd, 0, videoDuration));
+    else if (!videoIsPlaying && overRect(timelineStart, 0, timelineEnd, timelineHeight)) videoPlayer.seekTo(map(mouseX, timelineStart, timelineEnd, 0, videoDuration));
 }
 
 // Transition increase size for video
@@ -32,6 +21,7 @@ function increaseVideoSize() {
         videoHeightPlayCounter += videoTransitionCounter;
         video.style('height', videoHeightPlayCounter + '');
     }
+    videoPlayer.unMute();
 }
 
 // Transition decrease size for video
@@ -45,90 +35,42 @@ function decreaseVideoSize() {
         videoHeightPlayCounter -= videoTransitionCounter;
         video.style('height', videoHeightPlayCounter + '');
     }
+    videoPlayer.mute();
 }
 
 // Plays/pauses video and sets boolean videoIsPlaying
 function playPauseMovie() {
-    switch(videoPlatform) {
-        case "Kaltura":
-            if (videoIsPlaying) {
-                player.sendNotification('doPause');
-                videoIsPlaying = false;
-            } else {
-                player.sendNotification('doSeek', videoCurrTime);
-                player.sendNotification('doPlay');
-                videoIsPlaying = true;
-            }
-            break;
-        case "Youtube":
-            if (videoIsPlaying) {
-                player.pauseVideo();
-                videoIsPlaying = false;
-            } else {
-                player.seekTo(videoCurrTime, true);
-                player.playVideo();
-                videoIsPlaying = true;
-            }
-            break;
+    if (videoIsPlaying) {
+        videoPlayer.pause();
+        videoIsPlaying = false;
+    } else {
+        videoPlayer.seekTo(videoCurrTime, true);
+        videoPlayer.play();
+        videoIsPlaying = true;
     }
 }
 
 // Pauses video, assumes boolean videoIsPlaying is set
 function pauseMovie() {
-    switch(videoPlatform) {
-        case "Kaltura":
-            player.sendNotification('doPause');
-            break;
-        case "Youtube":
-            player.pauseVideo();
-            break;
-    }
+    videoPlayer.pause();
     videoIsPlaying = false;
 }
 
 // Returns the current time of the video
 function getMovieCurrentTime() {
-    var currentTime = 0;
-    switch(videoPlatform) {
-        case "Kaltura":
-            currentTime = player.evaluate('{video.player.currentTime}');
-            break;
-        case "Youtube":
-            currentTime = player.getCurrentTime();
-            break;
-    }
-    return currentTime;
+    return videoPlayer.getCurrentTime();
 }
 
 // Initialization for the video player
-function setupMovie() {
-    switch(videoPlatform) {
+function setupMovie(movieDiv, platform, params) {
+    params['targetId'] = movieDiv; // regardless of platform, the player needs a target div
+    // Based on the specified platform, chose the appropriate type of Video Player to use
+    switch(platform) {
         case "Kaltura":
-            kWidget.embed({
-                'targetId': 'moviePlayer',
-                'wid': '_1038472',
-                'uiconf_id': '33084471',
-                'entry_id': '1_9tp4soob',
-                'flashvars': { // flashvars allows you to set runtime uiVar configuration overrides.
-                    'controlBarContainer.plugin': false,
-                    'disableOnScreenClick': true,
-                    'largePlayBtn.plugin': false,
-                    'autoPlay': false
-                },
-                'params': { // params allows you to set flash embed params such as wmode, allowFullScreen etc
-                    'wmode': 'transparent'
-                }
-            });
-            player = document.getElementById('moviePlayer');
+            videoPlayer = new KalturaPlayer(params);
             break;
         case "Youtube":
-            player = new YT.Player('moviePlayer', {
-                videoId: 'Iu0rxb-xkMk',
-                playerVars: {
-                    controls: 0,
-                    disablekb: 1,
-                }
-            });
+            videoPlayer = new YoutubePlayer(params);
             break;
     }
 }

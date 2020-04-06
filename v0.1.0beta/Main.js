@@ -47,7 +47,12 @@ var videoDuration = 429; // video duration in seconds
 var videoWidthOnPause, videoHeightOnPause, videoWidthOnPlay, videoHeightOnPlay; // permanent video width/heights
 var videoWidthPlayCounter, videoHeightPlayCounter; // allows for transition between video width/heights
 var videoTransitionCounter = 40; // speed of video size transitions
-var videoPlatform = 'Kaltura'; //what platform the video is being hosted on
+var videoPlatform = 'Kaltura'; // what platform the video is being hosted on, either 'Kaltura' or 'Youtube'
+var videoParams = { // parameters that uniquely identify the video, platform specific
+        wid: '_1038472',
+        uiconf_id: '33084471',
+        entry_id: '1_9tp4soob' };
+var videoPlayer; // instantiated in setupMovie method in Video.js
 
 //******* MESSAGES *******
 // Buttons
@@ -74,11 +79,11 @@ function preload() {
     font_Playfairbold = loadFont("data/PlayfairDisplay-Bold.ttf");
     font_Lato = loadFont("data/Lato-Light.ttf");
     floorPlan = loadImage("data/floorplan.png");
-    // Create div to hold video player
-    var movie = createDiv();
+    // Set up the video element
+    var movie = createDiv(); // create the div that will hold the video
     movie.id('moviePlayer');
     movie.style('display','none');
-    setupMovie();
+    setupMovie('moviePlayer', videoPlatform, videoParams); // set up the videoPlayer
 }
 
 function setup() {
