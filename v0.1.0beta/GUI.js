@@ -61,8 +61,9 @@ function overButtonsMSGS() {
 // Draw text for button message/information
 function drawKeyMSG(msg) {
     var textBoxHeight = textSpacing * (ceil(textWidth(msg) / textBoxWidth)); // lines of talk in a text box rounded
-    var textBoxStart = buttonsHeight - (textBoxHeight + 2 * boxSpacing);
-    stroke(0); //set color to black
+    var textBoxStart = speakerKeysHeight - (textBoxHeight + 2 * boxSpacing);
+    var yPosBubble = textBoxStart + textBoxHeight + 2 * boxSpacing;
+    stroke(0);
     strokeWeight(1);
     fill(255, 225); // transparency for textbox
     var xPos = 0;
@@ -72,6 +73,15 @@ function drawKeyMSG(msg) {
     fill(0);
     noStroke();
     text(msg, xPos - textBoxWidth / 2, textBoxStart + boxSpacing, textBoxWidth, textBoxWidth);
+    // lines for cartoon bubble
+    stroke(255);
+    strokeWeight(2);
+    line(mouseX - (3 * buttonSpacing), yPosBubble, mouseX - buttonSpacing, yPosBubble);
+    stroke(0);
+    strokeWeight(1);
+    line(mouseX, buttonsHeight, mouseX - (3 * buttonSpacing), yPosBubble);
+    line(mouseX, buttonsHeight, mouseX - buttonSpacing, yPosBubble);
+
 }
 
 function drawHowToReadMSG() {
