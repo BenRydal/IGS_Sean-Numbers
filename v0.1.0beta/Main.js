@@ -5,9 +5,21 @@ CREDITS/LICENSE INFORMATION: This software is  licensed under the GNU General Pu
 */
 
 
+//******* INPUT VARIABLES *******
+var fileNames = ['Cassandra.csv', 'Mei.csv', 'Nathan.csv', 'Sean.csv', 'Teacher.csv']; // holds list of filenames, first letter of file is used to associate with speaker
+var speakerColor = { // dictionary to associate colors to people
+    "T": 0, // Teacher
+    "S": 1, // Sean
+    "M": 2, // Mei
+    "C": 3, // Cassandra
+    "N": 4  //  Nathan
+};
+var colorShades = ['#984ea3', '#377eb8', '#4daf4a', '#e41a1c', '#ff7f00']; // Purple, Blue, Green, Red, Orange
+var videoPlatform = 'Kaltura'; // what platform the video is being hosted on
+var videoDuration = 429; // video duration in seconds
+
 //******* DATA *******
 var dataTables = []; // holds # of files for data processing
-var fileNames; // list of string names of files
 var paths = []; // holder for each person
 var rowCounts = []; // list to sort max/min number of movement points in each path
 var animationMaxValue;
@@ -21,8 +33,6 @@ var bugPrecision, bugSize;
 
 //******* GUI *******
 var font_PlayfairReg, font_PlayfairItalic, font_PlayfairBold, font_Lato;
-var speakerColor = {}; // hash for speaker color
-var colorShades = ['#984ea3', '#377eb8', '#4daf4a', '#e41a1c', '#ff7f00']; // Teacher, Sean, Mei, Cassandra, Nathan
 var buttonSpacing, buttonWidth, speakerKeysHeight, buttonsHeight;
 // 5 Modes
 var animation = true,
@@ -43,11 +53,9 @@ var textBoxWidth, textSpacing, boxSpacing, boxDistFromRect;
 //******* VIDEO *******
 var videoIsPlaying = false; // indicates if video is playing/stopped
 var videoCurrTime = 0; // video current time in seconds
-var videoDuration = 429; // video duration in seconds
 var videoWidthOnPause, videoHeightOnPause, videoWidthOnPlay, videoHeightOnPlay; // permanent video width/heights
 var videoWidthPlayCounter, videoHeightPlayCounter; // allows for transition between video width/heights
 var videoTransitionCounter = 40; // speed of video size transitions
-var videoPlatform = 'Kaltura'; //what platform the video is being hosted on
 
 //******* MESSAGES *******
 // Buttons
@@ -63,7 +71,6 @@ var infoMsg = "Revisiting the case of 'Sean Numbers' by Ben Rydal Shapiro & Chri
 
 // Loads fonts, floor plan, and CSV file into p5.Table objects so that they can manipulated later
 function preload() {
-    fileNames = ['Cassandra.csv', 'Mei.csv', 'Nathan.csv', 'Sean.csv', 'Teacher.csv'];
     for (var i = 0; i < fileNames.length; i++) { // loop through all files in directory
         var fileName = 'data/interaction/' + fileNames[i];
         var dataTable = loadTable(fileName, "header");
@@ -77,7 +84,7 @@ function preload() {
     // Create div to hold video player
     var movie = createDiv();
     movie.id('moviePlayer');
-    movie.style('display','none');
+    movie.style('display', 'none');
     setupMovie();
 }
 

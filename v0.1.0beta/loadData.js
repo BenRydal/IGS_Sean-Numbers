@@ -1,6 +1,5 @@
 function setData() {
     setGUI();
-    setSpeakerData();
     processData();
     animationMaxValue = Math.min(...rowCounts); // set animationMaxVlaue to the smallest data file
 }
@@ -48,15 +47,6 @@ function setVideoValues() {
     videoHeightOnPlay = height * .78;
     videoWidthPlayCounter = videoWidthOnPause;
     videoHeightPlayCounter = videoHeightOnPause;
-}
-
-// Set hash values to associate colors to speakers/movement paths
-function setSpeakerData() {
-    speakerColor["T"] = 0;
-    speakerColor["S"] = 1;
-    speakerColor["M"] = 2;
-    speakerColor["C"] = 3;
-    speakerColor["N"] = 4;
 }
 
 function processData() {
