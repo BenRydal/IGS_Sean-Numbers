@@ -60,8 +60,7 @@ function loadDataTable(data, speaker) {
     var movement = []; // holds location data for each path
     var conversation = []; // holds conversaton data and location data for conversation for each path
     var rowCount = data.getRowCount();
-    var samplingRate = 10;
-    rowCounts.push(rowCount / samplingRate); // add number of data points to rowCounts list to set animation
+    rowCounts.push(rowCount / dataSamplingRate); // add number of data points to rowCounts list to set animation
 
     // loop through table
     for (var i = 0; i < rowCount; i++) {
@@ -69,14 +68,13 @@ function loadDataTable(data, speaker) {
         var turn = data.getString(i, "talk");
         if (turn.length > 0) {
             var convoToAdd = new Point_Conversation();
-            convoToAdd.xPos = data.getNum(i, "x") * width / 1440; // scale factors to fit screen correctly
-            convoToAdd.yPos = data.getNum(i, "y") * height / 900;
+            convoToAdd.xPos = data.getNum(i, "x") * width / xScaleFactor; // divide by scale factors to fit screen correctly
+            convoToAdd.yPos = data.getNum(i, "y") * height / yScaleFactor;
             convoToAdd.time = map(i, 0, rowCount, timelineStart, timelineEnd);
             convoToAdd.talkTurn = turn;
             conversation.push(convoToAdd);
         }
-        // Add to movement ArrayList depending on sampling rate
-        if (i % samplingRate == 0) { // only get points from rows based on sampling rate (reduces data)
+        if (i % dataSamplingRate == 0) { // only add to movement list based on sampling rate (reduces data)
             var mvmntToAdd = new Point_Movement();
             mvmntToAdd.xPos = data.getNum(i, "x") * width / 1440; // scale factors to fit screen correctly
             mvmntToAdd.yPos = data.getNum(i, "y") * height / 900;

@@ -12,11 +12,14 @@ var speakerColor = { // dictionary to associate colors to people
     "S": 1, // Sean
     "M": 2, // Mei
     "C": 3, // Cassandra
-    "N": 4  //  Nathan
+    "N": 4 //  Nathan
 };
 var colorShades = ['#984ea3', '#377eb8', '#4daf4a', '#e41a1c', '#ff7f00']; // Purple, Blue, Green, Red, Orange
 var videoPlatform = 'Kaltura'; // what platform the video is being hosted on
 var videoDuration = 429; // video duration in seconds
+var xScaleFactor = 1440; // scale factors to scale floor plan/data correctly
+var yScaleFactor = 900;
+var dataSamplingRate = 10; // rate data is sampled, increase to speed up program
 
 //******* DATA *******
 var dataTables = []; // holds # of files for data processing
