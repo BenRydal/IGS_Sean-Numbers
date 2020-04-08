@@ -46,22 +46,36 @@ class KalturaPlayer {
         this.player = document.getElementById(this.targetId);
     }
 
-    seekTo(time) { this.player.sendNotification('doSeek', time); }
+    seekTo(time) {
+        this.player.sendNotification('doSeek', time);
+    }
 
-    play() { this.player.sendNotification('doPlay'); }
+    play() {
+        this.player.sendNotification('doPlay');
+    }
 
-    pause() { this.player.sendNotification('doPause'); }
+    pause() {
+        this.player.sendNotification('doPause');
+    }
 
-    mute() { this.player.sendNotification('changeVolume', 0); }
+    mute() {
+        this.player.sendNotification('changeVolume', 0);
+    }
 
-    unMute() { this.player.sendNotification('changeVolume', 1); }
+    unMute() {
+        this.player.sendNotification('changeVolume', 1);
+    }
 
-    getCurrentTime() { return this.player.evaluate('{video.player.currentTime}'); }
+    getCurrentTime() {
+        return this.player.evaluate('{video.player.currentTime}');
+    }
 }
 
 
 // This is the VideoPlayer implementation that utilizes the Youtube Player API
-// Note to use a Youtube Player, the Youtube iFrame Player API must be loaded
+// Note to use a Youtube Player, the Youtube iFrame Player API must be loaded of the format: 
+// <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+
 class YoutubePlayer {
 
     // For a YoutubePlayer, Main.js should have:
@@ -83,15 +97,27 @@ class YoutubePlayer {
         });
     }
 
-    seekTo(time) { this.player.seekTo(time, true); }
+    seekTo(time) {
+        this.player.seekTo(time, true);
+    }
 
-    play() { this.player.playVideo(); }
+    play() {
+        this.player.playVideo();
+    }
 
-    pause() { this.player.pauseVideo(); }
+    pause() {
+        this.player.pauseVideo();
+    }
 
-    mute() { this.player.mute(); }
+    mute() {
+        this.player.mute();
+    }
 
-    unMute() { this.player.unMute(); }
+    unMute() {
+        this.player.unMute();
+    }
 
-    getCurrentTime() { return this.player.getCurrentTime(); }
+    getCurrentTime() {
+        return this.player.getCurrentTime();
+    }
 }

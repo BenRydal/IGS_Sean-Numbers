@@ -17,9 +17,10 @@ var speakerColor = { // dictionary to associate colors to people
 var colorShades = ['#984ea3', '#377eb8', '#4daf4a', '#e41a1c', '#ff7f00']; // Purple, Blue, Green, Red, Orange
 var videoPlatform = 'Kaltura'; // what platform the video is being hosted on
 var videoParams = { // parameters that uniquely identify the video, platform specific
-        wid: '_1038472',
-        uiconf_id: '33084471',
-        entry_id: '1_9tp4soob' };
+    wid: '_1038472',
+    uiconf_id: '33084471',
+    entry_id: '1_9tp4soob'
+};
 var videoDuration = 429; // video duration in seconds
 var xScaleFactor = 1440; // scale factors to scale floor plan/data correctly
 var yScaleFactor = 900;
@@ -77,6 +78,37 @@ var videoMSG = "Press this button to watch video from this classroom discussion.
 var titleMsg = "Classroom Interaction Geography";
 var infoMsg = "Revisiting the case of 'Sean Numbers' by Ben Rydal Shapiro & Christine Hsieh, Original Data Collected by Dr. Deborah Loewenberg Ball and used with special permission from Mathematics Teaching and Learning to Teach, University of Michigan";
 
+
+// Holds data for movement points derived from table
+class Point_Movement {
+    constructor(xPos, yPos, time) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.time = time;
+    }
+}
+
+// Holds data for conversation points derived from table
+class Point_Conversation {
+    constructor(xPos, yPos, time, talkTurn) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.time = time;
+        this.talkTurn = talkTurn; //spoken words/conversation
+    }
+}
+
+// Path has list of movement and conversation points, speaker, and boolean indicating if it is showing
+class Path {
+    constructor(speaker) {
+        this.movement = []; //storing Point_Movement objects
+        this.conversation = []; //storing Point_Conversation objects
+        this.show = true;
+        this.speaker = speaker;
+    }
+}
+
+
 // Loads fonts, floor plan, and CSV file into p5.Table objects so that they can manipulated later
 function preload() {
     for (var i = 0; i < fileNames.length; i++) { // loop through all files in directory
@@ -121,4 +153,10 @@ function draw() {
         if (videoIsPlaying) increaseVideoSize();
         else decreaseVideoSize();
     }
+}
+
+// Increments animation counter if below max value or sets animation to false/off
+function updateAnimation() {
+    if (animationCounter < animationMaxValue) animationCounter++;
+    else animation = false;
 }

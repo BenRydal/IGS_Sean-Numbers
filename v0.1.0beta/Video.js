@@ -1,9 +1,3 @@
-// Increments animation counter if below max value or sets animation to false/off
-function updateAnimation() {
-    if (animationCounter < animationMaxValue) animationCounter++;
-    else animation = false;
-}
-
 // Updates time selected in video for animation or when mouse is clicked
 function updateVideoScrubbing() {
     if (animation) videoPlayer.seekTo(map(bugTimePosForVideo, timelineStart, timelineEnd, 0, videoDuration));
@@ -59,18 +53,4 @@ function pauseMovie() {
 // Returns the current time of the video
 function getMovieCurrentTime() {
     return videoPlayer.getCurrentTime();
-}
-
-// Initialization for the video player
-function setupMovie(movieDiv, platform, params) {
-    params['targetId'] = movieDiv; // regardless of platform, the videoPlayer needs a target div
-    // Based on the specified platform, chose the appropriate type of videoPlayer to use
-    switch(platform) {
-        case "Kaltura":
-            videoPlayer = new KalturaPlayer(params);
-            break;
-        case "Youtube":
-            videoPlayer = new YoutubePlayer(params);
-            break;
-    }
 }

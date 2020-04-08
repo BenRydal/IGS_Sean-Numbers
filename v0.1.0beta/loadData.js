@@ -49,6 +49,20 @@ function setVideoValues() {
     videoHeightPlayCounter = videoHeightOnPause;
 }
 
+// Initialization for the video player
+function setupMovie(movieDiv, platform, params) {
+    params['targetId'] = movieDiv; // regardless of platform, the videoPlayer needs a target div
+    // Based on the specified platform, chose the appropriate type of videoPlayer to use
+    switch (platform) {
+        case "Kaltura":
+            videoPlayer = new KalturaPlayer(params);
+            break;
+        case "Youtube":
+            videoPlayer = new YoutubePlayer(params);
+            break;
+    }
+}
+
 function processData() {
     for (var i = 0; i < dataTables.length; i++) { // loop through all files in directory
         loadDataTable(dataTables[i], fileNames[i].charAt(0)); // Use first letter of file name to associate with speaker
