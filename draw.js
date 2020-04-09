@@ -1,3 +1,4 @@
+// Super class with 2 sub-classes drawDataMovement and drawDataConversation
 class DrawData {
 
     constructor() {
