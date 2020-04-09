@@ -15,8 +15,10 @@ var speakerColor = { // dictionary to associate colors to people
     "N": 4 //  Nathan
 };
 var colorShades = ['#984ea3', '#377eb8', '#4daf4a', '#e41a1c', '#ff7f00']; // Purple, Blue, Green, Red, Orange
-var videoPlatform = 'Kaltura'; // what platform the video is being hosted on
-var videoParams = { // parameters that uniquely identify the video, platform specific
+var videoPlatform = 'Kaltura'; // what platform the video is being hosted on, specifies what videoPlayer should be instantiated during setupMovie
+// For videoPlatform 'Kaltura', videoParams expects 3 items, the wid, uiconf_id, and entry_id
+// For videoPlatform 'Youtube', videoParams expects 1 item, the videoId
+var videoParams = { // dictionary of parameters that uniquely identify the video, platform specific (see video-player.js for more detail)
     wid: '_1038472',
     uiconf_id: '33084471',
     entry_id: '1_9tp4soob'
@@ -64,7 +66,7 @@ var videoCurrTime = 0; // video current time in seconds
 var videoWidthOnPause, videoHeightOnPause, videoWidthOnPlay, videoHeightOnPlay; // permanent video width/heights
 var videoWidthPlayCounter, videoHeightPlayCounter; // allows for transition between video width/heights
 var videoTransitionCounter = 40; // speed of video size transitions
-var videoPlayer; // instantiated in setupMovie method in Video.js
+var videoPlayer; // instantiated in setupMovie method, used to manipulate video (play, pause, seek, etc.)
 
 //******* MESSAGES *******
 // Buttons
@@ -125,7 +127,7 @@ function preload() {
     var movie = createDiv(); // create the div that will hold the video
     movie.id('moviePlayer');
     movie.style('display', 'none');
-    setupMovie('moviePlayer', videoPlatform, videoParams); // set up the videoPlayer
+    setupMovie('moviePlayer', videoPlatform, videoParams); // set up the video player
 }
 
 function setup() {

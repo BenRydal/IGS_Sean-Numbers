@@ -1,13 +1,16 @@
 /**********************************************************************************************
-Conceptually, KalturaPlayer and YoutubePlayer are implementations of a VideoPlayer interface
-(but because JS is dynamically typed, we don't actually need to declare a VideoPlayer interface)
+Conceptually, KalturaPlayer and YoutubePlayer are implementations of a VideoPlayer interface; this
+means that they support the same functionality by having the same set of method names, but behind
+the scenes, achieve the functionality in different ways (by relying on platform-specific APIs).
 
+But because JS is dynamically typed, we don't actually need to declare a VideoPlayer interface.
 Any additional implementation of VideoPlayer should have the following methods:
     seekTo(time), play(), pause(), mute(), unMute(), getCurrentTime()
 
 Note the params variable passed into the constructors, this is designed to be a dictionary
-containing any relevant settings and id's that are used to initailize the player to the
-correct video.
+containing any relevant settings that are used to initailize the player to the correct video.
+This params variable is declared in main.js and is called 'videoParams'; note that in setupMovie,
+the 'targetId' is added to the params to specify the div holding the player
 **********************************************************************************************/
 
 
@@ -73,7 +76,7 @@ class KalturaPlayer {
 
 
 // This is the VideoPlayer implementation that utilizes the Youtube Player API
-// Note to use a Youtube Player, the Youtube iFrame Player API must be loaded of the format: 
+// Note to use a Youtube Player, the Youtube iFrame Player API must be loaded of the format:
 // <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 
 class YoutubePlayer {
