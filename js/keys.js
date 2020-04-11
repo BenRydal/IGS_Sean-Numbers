@@ -11,11 +11,11 @@ class Keys {
         var currXPos = timelineStart;
         strokeWeight(5);
         for (var i = 0; i < paths.length; i++) {
-            var path = paths[i];
-            stroke(getPathColor(path.speaker));
+            var path = paths[i];      
+            stroke(speakerColor[path.speaker]);
             noFill();
             rect(currXPos, speakerKeysHeight, buttonWidth, buttonWidth);
-            fill(getPathColor(path.speaker));
+            fill(speakerColor[path.speaker]);
             if (path.show) rect(currXPos, speakerKeysHeight, buttonWidth, buttonWidth);
             fill(0);
             noStroke();

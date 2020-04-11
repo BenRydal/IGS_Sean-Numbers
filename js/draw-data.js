@@ -7,7 +7,7 @@ class DrawData {
     }
 
     setDrawData(path) {
-        var shade = getPathColor(path.speaker); // get color for path
+        var shade = speakerColor[path.speaker]; // get color for path
         if (conversationView_1 || conversationView_2) this.drawConversation.setData(path);
         this.drawMovement.setData(path, shade);
     }
@@ -130,7 +130,7 @@ class DrawDataConversation {
             // setText sets stroke/strokeWeight to highlight rect if selected
             if (overRect(point.xPos, point.yPos - conversationLength, conversationRectWidth, conversationLength)) this.setText(points[i], PLAN); // if over plan
             else if (overRect(point.time, point.yPos - conversationLength, conversationRectWidth, conversationLength)) this.setText(points[i], SPACETIME); // if over spacetime
-            fill(getPathColor(point.talkTurn.charAt(0)));
+            fill(speakerColor[point.talkTurn.charAt(0)]);   
             rect(point.xPos, point.yPos - conversationLength, conversationRectWidth, conversationLength); // Plan
             rect(point.time, point.yPos - conversationLength, conversationRectWidth, conversationLength); // Spacetime
         }

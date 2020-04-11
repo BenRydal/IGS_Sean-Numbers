@@ -1,4 +1,5 @@
 function mousePressed() {
+    if (intro) intro = false;
     textSize(keyTextSize);
     // Controls video when clicking on timeline
     if (videoMode && !animation && overRect(timelineStart, 0, timelineEnd, timelineHeight)) {
@@ -81,7 +82,6 @@ function drawKeyMSG(msg) {
     strokeWeight(1);
     line(mouseX, buttonsHeight, mouseX - (3 * buttonSpacing), yPosBubble);
     line(mouseX, buttonsHeight, mouseX - buttonSpacing, yPosBubble);
-
 }
 
 function drawHowToReadMSG() {
@@ -96,6 +96,32 @@ function drawHowToReadMSG() {
     noStroke();
     text(howToReadMSG_1, xPos, textBoxStart + boxSpacing, textBoxWidth, textBoxWidth); // draw message in space-tiem view
     drawKeyMSG(howToReadMSG_2); // draw message above how to read button
+}
+
+// Draw text for intro message
+function drawIntroMSG(msg) {
+    textSize(keyTextSize);
+    textFont(font_PlayfairReg);
+    var textBoxHeight = textSpacing * (ceil(textWidth(msg) / textBoxWidth)); // lines of talk in a text box rounded
+    var textBoxStart = speakerKeysHeight - (textBoxHeight + 2 * boxSpacing);
+    var yPosBubble = textBoxStart + textBoxHeight + 2 * boxSpacing;
+    stroke(0);
+    strokeWeight(1);
+    fill(255, 225); // transparency for textbox
+    var xPos = width - textBoxWidth / 2 - 2 * boxSpacing;
+    rect(xPos - boxSpacing - textBoxWidth / 2, textBoxStart, textBoxWidth + 2 * boxSpacing, textBoxHeight + 2 * boxSpacing);
+    fill(0);
+    noStroke();
+    text(msg, xPos - textBoxWidth / 2, textBoxStart + boxSpacing, textBoxWidth, textBoxWidth);
+    var xPosBubble = width - textBoxWidth / 3;
+    // lines for cartoon bubble
+    stroke(255);
+    strokeWeight(2);
+    line(xPosBubble - (3 * buttonSpacing), yPosBubble, xPosBubble - buttonSpacing, yPosBubble);
+    stroke(0);
+    strokeWeight(1);
+    line(xPosBubble, buttonsHeight, xPosBubble - (3 * buttonSpacing), yPosBubble);
+    line(xPosBubble, buttonsHeight, xPosBubble - buttonSpacing, yPosBubble);
 }
 
 
@@ -151,10 +177,4 @@ function getFullName(speaker) {
     else if (speaker == 'C') return "  Cassandra";
     else if (speaker == 'N') return "  Nathan";
     else return "name";
-}
-
-// returns a color based on character
-function getPathColor(speaker) {
-    var val = speakerColor[speaker]; // get number from name to set color
-    return color(colorShades[val]);
 }

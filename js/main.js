@@ -8,13 +8,12 @@ CREDITS/LICENSE INFORMATION: This software is  licensed under the GNU General Pu
 //******* INPUT VARIABLES *******
 var fileNames = ['Cassandra.csv', 'Mei.csv', 'Nathan.csv', 'Sean.csv', 'Teacher.csv']; // holds list of filenames, first letter of file is used to associate with speaker
 var speakerColor = { // dictionary to associate colors to people
-    "T": 0, // Teacher
-    "S": 1, // Sean
-    "M": 2, // Mei
-    "C": 3, // Cassandra
-    "N": 4 //  Nathan
+    "T": '#984ea3', // Teacher | purple
+    "S": '#377eb8', // Sean | blue
+    "M": '#4daf4a', // Mei | green
+    "C": '#e41a1c', // Cassandra | red
+    "N": '#ff7f00'  //  Nathan | orange
 };
-var colorShades = ['#984ea3', '#377eb8', '#4daf4a', '#e41a1c', '#ff7f00']; // Purple, Blue, Green, Red, Orange
 var videoPlatform = 'Kaltura'; // what platform the video is being hosted on, specifies what videoPlayer should be instantiated during setupMovie
 // For videoPlatform 'Kaltura', videoParams expects 3 items, the wid, uiconf_id, and entry_id
 // For videoPlatform 'Youtube', videoParams expects 1 item, the videoId
@@ -42,6 +41,7 @@ var animationCounter = 0; // controls animation
 var bugPrecision, bugSize;
 
 //******* GUI *******
+var intro = true; // sets intro message to start program
 var font_PlayfairReg, font_PlayfairItalic, font_PlayfairBold, font_Lato;
 var buttonSpacing, buttonWidth, speakerKeysHeight, buttonsHeight;
 // 5 Modes
@@ -70,6 +70,7 @@ var videoPlayer; // instantiated in setupMovie method, used to manipulate video 
 
 //******* MESSAGES *******
 // Buttons
+var introMSG = "Press this button to learn how to read and interact with this this visualization";
 var howToReadMSG_1 = "The left view shows the teachers movement over a floor plan of a 3rd grade classroom. The right view shows the teachers movement over a timeline where the vertical axis corresponds with the vertical dimension of the classroom.";
 var howToReadMSG_2 = "Hover over each button to learn about interactive features in this visualization";
 var animateMSG = "Press this button to animate movement and conversation over space and time";
@@ -156,4 +157,5 @@ function draw() {
         if (videoIsPlaying) increaseVideoSize();
         else decreaseVideoSize();
     }
+    if (intro) drawIntroMSG(introMSG); // draw intro message on program start up until mouse is pressed
 }
