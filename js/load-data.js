@@ -44,7 +44,7 @@ function setVideoValues() {
     videoWidthOnPause = width / 5;
     videoHeightOnPause = width / 6;
     videoWidthOnPlay = width - timelineStart;
-    videoHeightOnPlay = height * .78;
+    videoHeightOnPlay = height * .74;
     videoWidthPlayCounter = videoWidthOnPause;
     videoHeightPlayCounter = videoHeightOnPause;
 }
@@ -90,8 +90,8 @@ function loadDataTable(data, speaker) {
         }
         if (i % dataSamplingRate == 0) { // only add to movement list based on sampling rate (reduces data)
             var mvmntToAdd = new Point_Movement();
-            mvmntToAdd.xPos = data.getNum(i, "x") * width / 1440; // scale factors to fit screen correctly
-            mvmntToAdd.yPos = data.getNum(i, "y") * height / 900;
+            mvmntToAdd.xPos = data.getNum(i, "x") * width / xScaleFactor; // scale factors to fit screen correctly
+            mvmntToAdd.yPos = data.getNum(i, "y") * height / yScaleFactor;
             mvmntToAdd.time = map(i, 0, rowCount, timelineStart, timelineEnd);
             movement.push(mvmntToAdd); // always add to movement and only sometimes add to conversationPoints
         }
