@@ -70,7 +70,7 @@ var videoPlayer; // instantiated in setupMovie method, used to manipulate video 
 
 //******* MESSAGES *******
 // Buttons
-var introMSG = "Press this button to learn how to read and interact with this this visualization";
+var introMSG = "Press this button to learn how to read and interact with this visualization";
 var howToReadMSG_1 = "The left view shows the teachers movement over a floor plan of a 3rd grade classroom. The right view shows the teachers movement over a timeline where the vertical axis corresponds with the vertical dimension of the classroom.";
 var howToReadMSG_2 = "Hover over each button to learn about interactive features in this visualization";
 var animateMSG = "Press this button to animate movement and conversation over space and time";
