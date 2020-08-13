@@ -63,6 +63,7 @@ function setupMovie(movieDiv, platform, params) {
     }
 }
 
+
 function processData() {
     for (var i = 0; i < dataTables.length; i++) { // loop through all files in directory
         loadDataTable(dataTables[i], fileNames[i].charAt(0)); // Use first letter of file name to associate with speaker

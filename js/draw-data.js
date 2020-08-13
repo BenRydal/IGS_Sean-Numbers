@@ -46,7 +46,7 @@ class DrawDataMovement {
                 curveVertex(point.time, point.yPos);
                 if (videoIsPlaying) {
                     var videoTime = getMovieCurrentTime();
-                    var videoX = map(videoTime, 0, videoDuration, timelineStart, timelineEnd);
+                    var videoX = map(videoTime, videoStart, videoEnd, timelineStart, timelineEnd);
                     if (videoX >= point.time - bugPrecision && videoX <= point.time + bugPrecision) {
                         this.recordBug(point.xPos, point.yPos, point.time);
                     }
@@ -84,10 +84,6 @@ class DrawDataMovement {
         fill(0);
         stroke(0);
         strokeWeight(2);
-        //if (videoIsPlaying) {
-        //  float videoX = map(ballVideo.time(), 0, videoDuration, timelineStart, timelineEnd);
-        //  line(videoX, 0, videoX, timelineHeight);
-        //} else
         line(this.bugTimePos, 0, this.bugTimePos, timelineHeight);
 
     }

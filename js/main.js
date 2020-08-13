@@ -12,17 +12,29 @@ var speakerColor = { // dictionary to associate colors to people
     "S": '#377eb8', // Sean | blue
     "M": '#4daf4a', // Mei | green
     "C": '#e41a1c', // Cassandra | red
-    "N": '#ff7f00'  //  Nathan | orange
+    "N": '#ff7f00' //  Nathan | orange
 };
-var videoPlatform = 'Kaltura'; // what platform the video is being hosted on, specifies what videoPlayer should be instantiated during setupMovie
+
+
 // For videoPlatform 'Kaltura', videoParams expects 3 items, the wid, uiconf_id, and entry_id
 // For videoPlatform 'Youtube', videoParams expects 1 item, the videoId
-var videoParams = { // dictionary of parameters that uniquely identify the video, platform specific (see video-player.js for more detail)
-    wid: '_1038472',
-    uiconf_id: '33084471',
-    entry_id: '1_9tp4soob'
+var videoPlatform = 'Youtube'; // what platform the video is being hosted on, specifies what videoPlayer should be instantiated during setupMovie
+videoParams = {
+    videoId: 'leasL_kk8XM'
 };
-var videoDuration = 429; // video duration in seconds
+
+//var videoPlatform = 'Kaltura'; // what platform the video is being hosted on, specifies what videoPlayer should be instantiated during setupMovie
+//var videoParams = { // dictionary of parameters that uniquely identify the video, platform specific (see video-player.js for more detail)
+//    wid: '_1038472',
+//    uiconf_id: '33084471',
+//    entry_id: '1_9tp4soob'
+//};
+
+// Kaltura videoStart = 0, videoEnd = 429, videoDuration = 429;
+// Youtube videoStart = 988, videoEnd = 1416;
+var videoStart = 988;
+var videoEnd = 1416;
+// var videoDuration = 429; // video duration in seconds
 var xScaleFactor = 1440; // scale factors to scale floor plan/data correctly
 var yScaleFactor = 900;
 var dataSamplingRate = 10; // rate data is sampled, increase to speed up program

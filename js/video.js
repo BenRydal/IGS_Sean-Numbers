@@ -1,7 +1,7 @@
 // Updates time selected in video for animation or when mouse is clicked
 function updateVideoScrubbing() {
-    if (animation) videoPlayer.seekTo(map(bugTimePosForVideo, timelineStart, timelineEnd, 0, videoDuration));
-    else if (!videoIsPlaying && overRect(timelineStart, 0, timelineEnd, timelineHeight)) videoPlayer.seekTo(map(mouseX, timelineStart, timelineEnd, 0, videoDuration));
+    if (animation) videoPlayer.seekTo(map(bugTimePosForVideo, timelineStart, timelineEnd, videoStart, videoEnd));
+    else if (!videoIsPlaying && overRect(timelineStart, 0, timelineEnd, timelineHeight)) videoPlayer.seekTo(map(mouseX, timelineStart, timelineEnd, videoStart, videoEnd));
 }
 
 // Transition increase size for video

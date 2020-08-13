@@ -3,7 +3,7 @@ function mousePressed() {
     textSize(keyTextSize);
     // Controls video when clicking on timeline
     if (videoMode && !animation && overRect(timelineStart, 0, timelineEnd, timelineHeight)) {
-        videoCurrTime = map(mouseX, timelineStart, timelineEnd, 0, videoDuration);
+        videoCurrTime = map(mouseX, timelineStart, timelineEnd, videoStart, videoEnd);
         playPauseMovie();
     }
     overSpeakerKeys();
